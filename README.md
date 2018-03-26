@@ -16,6 +16,7 @@
 
 [Zev Ross Shiny tutorial (with 40 example apps)](http://zevross.com/blog/2016/04/19/r-powered-web-applications-with-shiny-a-tutorial-and-cheat-sheet-with-40-example-apps/)
 
+[Shiny App Gallery](https://shiny.rstudio.com/gallery/)
 
 ### User Interface
 
@@ -26,6 +27,8 @@
 [Customize your UI with HTML](https://shiny.rstudio.com/articles/html-tags.html)
 
 [Shiny HTML Tags Glossary](https://shiny.rstudio.com/articles/tag-glossary.html)
+
+[Shiny Widget Gallery](http://shiny.rstudio.com/gallery/widget-gallery.html)
 
 [Using Action Buttons](https://shiny.rstudio.com/articles/action-buttons.html)
 

@@ -1,0 +1,76 @@
+---
+title: "From 0 to Web App with Shiny"
+subtitle: 💅
+author: "Emily Bartha, Data Scientist at HomeAway"
+output:
+  xaringan::moon_reader:
+    css: ["default", "rladies", "rladies-fonts"]
+---
+
+# Installing Shiny
+
+In RStudio, run
+
+```{r, eval = FALSE} 
+install.packages(shiny)
+```
+
+<br/>
+
+Then navigate to **New File > Shiny Web App...** and name the app whatever you like.
+
+Click **Create**.
+
+---
+
+# Components of a Shiny app
+
+The User Interface (UI)
+
+- The visual part of your app (what the user sees and interacts with)
+
+- Renders in a web browser
+
+- Under the hood, its Javascript, HTML, and CSS
+
+The Server
+
+- The backend of your web app
+
+- Performs computations and generates the data that the user sees
+
+- Just R code
+
+---
+class: inverse, center, middle
+
+# The User Interface (UI)
+
+---
+
+# fluidPage
+
+---
+
+# UI Layouts
+
+---
+
+# HTML Tags
+
+---
+
+# Widgets
+
+---
+
+# Advanced
+
+---
+class: inverse, center, middle
+
+# The Server
+
+---
+
+# Inputs and Outputs

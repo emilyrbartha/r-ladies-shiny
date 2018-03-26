@@ -12,6 +12,11 @@
 
 [The Shiny Cheatsheet](https://shiny.rstudio.com/articles/cheatsheet.html)
 
+[Shiny tutorials](https://shiny.rstudio.com/tutorial/)
+
+[Zev Ross Shiny tutorial (with 40 example apps)](http://zevross.com/blog/2016/04/19/r-powered-web-applications-with-shiny-a-tutorial-and-cheat-sheet-with-40-example-apps/)
+
+
 ### User Interface
 
 [Application layout guide](https://shiny.rstudio.com/articles/layout-guide.html)

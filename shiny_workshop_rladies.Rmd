@@ -2,10 +2,9 @@
 title: "From 0 to Web App with Shiny"
 subtitle: 💅
 author: "Emily Bartha, Data Scientist at HomeAway"
-output:
-  xaringan::moon_reader:
-    css: ["default", "rladies", "rladies-fonts"]
----
+runtime: shiny
+output: html
+_document---
 
 # Installing Shiny
 
@@ -20,8 +19,6 @@ install.packages(shiny)
 Then navigate to **New File > Shiny Web App...** and name the app whatever you like.
 
 Click **Create**.
-
----
 
 # Components of a Shiny app
 
@@ -41,36 +38,65 @@ The Server
 
 - Just R code
 
----
-class: inverse, center, middle
-
 # The User Interface (UI)
-
----
 
 # fluidPage
 
----
+- Defines the page as a series of rows, allowing the user to specify components which lie on the same line
+
+- Scale in realtime to fill available space
+
+- Each row contains 12 columns of equal width
+
+```{r}
+library(shiny)
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+   
+   # Application title
+   titlePanel("Old Faithful Geyser Data"),
+   
+   # Sidebar with a slider input for number of bins 
+    fluidRow(
+       column(width = 3,
+              sliderInput("bins",
+                   "Number of bins:",
+                   min = 1,
+                   max = 50,
+                   value = 30)),
+       column(width = 9,
+              plotOutput("distPlot"))
+    )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+   
+   output$distPlot <- renderPlot({
+      # generate bins based on input$bins from ui.R
+      x    <- faithful[, 2] 
+      bins <- seq(min(x), max(x), length.out = input$bins + 1)
+      
+      # draw the histogram with the specified number of bins
+      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+   })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
 
 # UI Layouts
 
----
+- sidebarLayout - 
 
 # HTML Tags
 
----
-
 # Widgets
-
----
 
 # Advanced
 
----
-class: inverse, center, middle
-
 # The Server
-
----
 
 # Inputs and Outputs

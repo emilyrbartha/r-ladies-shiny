@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>From 0 to Web App with Shiny</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Emily Bartha, Data Scientist at HomeAway" />
+    <link href="shiny_workshop_rladies_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="shiny_workshop_rladies_files/remark-css-0.0.1/rladies.css" rel="stylesheet" />
+    <link href="shiny_workshop_rladies_files/remark-css-0.0.1/rladies-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# From 0 to Web App with Shiny
+## 💅
+### Emily Bartha, Data Scientist at HomeAway
+
+---
+
+
+# Installing Shiny
+
+In RStudio, run
+
+
+```r
+install.packages(shiny)
+```
+
+&lt;br/&gt;
+
+Then navigate to **New File &gt; Shiny Web App...** and name the app whatever you like.
+
+Click **Create**.
+
+---
+
+# Components of a Shiny app
+
+The User Interface (UI)
+
+- The visual part of your app (what the user sees and interacts with)
+
+- Renders in a web browser
+
+- Under the hood, its Javascript, HTML, and CSS
+
+The Server
+
+- The backend of your web app
+
+- Performs computations and generates the data that the user sees
+
+- Just R code
+
+---
+class: inverse, center, middle
+
+# The User Interface (UI)
+
+---
+
+# fluidPage
+
+- Defines the page as a series of rows, allowing the user to specify components which lie on the same line
+
+- Scale in realtime to fill available space
+
+- Each row contains 12 columns of equal width
+
+
+```r
+library(shiny)
+
+# Define UI for application that draws a histogram
+ui &lt;- fluidPage(
+   
+   # Application title
+   titlePanel("Old Faithful Geyser Data"),
+   
+   # Sidebar with a slider input for number of bins 
+    fluidRow(
+       column(width = 3,
+              sliderInput("bins",
+                   "Number of bins:",
+                   min = 1,
+                   max = 50,
+                   value = 30)),
+       column(width = 9,
+              plotOutput("distPlot"))
+    )
+)
+
+# Define server logic required to draw a histogram
+server &lt;- function(input, output) {
+   
+   output$distPlot &lt;- renderPlot({
+      # generate bins based on input$bins from ui.R
+      x    &lt;- faithful[, 2] 
+      bins &lt;- seq(min(x), max(x), length.out = input$bins + 1)
+      
+      # draw the histogram with the specified number of bins
+      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+   })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
+
+<div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
+
+---
+
+# UI Layouts
+
+- sidebarLayout - 
+
+---
+
+# HTML Tags
+
+---
+
+# Widgets
+
+---
+
+# Advanced
+
+---
+class: inverse, center, middle
+
+# The Server
+
+---
+
+# Inputs and Outputs
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

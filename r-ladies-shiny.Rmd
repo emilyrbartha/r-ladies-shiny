@@ -14,7 +14,8 @@ output:
 In RStudio, run
 
 ```{r, eval = FALSE} 
-install.packages(shiny)
+install.packages("shiny")
+install.packages("shinythemes")
 ```
 
 Then navigate to **New File > Shiny Web App...** and name the app whatever you like.
@@ -43,6 +44,10 @@ Click **Create**.
 
 - Written in R code
 
+### How Shiny Works
+
+![](shiny_diagram.jpg)
+
 ## The User Interface
 
 ### Application Layouts
@@ -58,6 +63,21 @@ Click **Create**.
 - Each row contains 12 columns of equal width
 
 **Example:**
+
+```{r, include=FALSE}
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+   
+   output$distPlot <- renderPlot({
+      # generate bins based on input$bins from ui.R
+      x    <- faithful[, 2] 
+      bins <- seq(min(x), max(x), length.out = input$bins + 1)
+      
+      # draw the histogram with the specified number of bins
+      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+   })
+}
+```
 
 ```{r}
 library(shiny)
@@ -81,19 +101,6 @@ ui <- fluidPage(
               plotOutput("distPlot"))
     )
 )
-
-# Define server logic required to draw a histogram
-server <- function(input, output) {
-   
-   output$distPlot <- renderPlot({
-      # generate bins based on input$bins from ui.R
-      x    <- faithful[, 2] 
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
-      
-      # draw the histogram with the specified number of bins
-      hist(x, breaks = bins, col = 'darkgray', border = 'white')
-   })
-}
 
 # Run the application 
 shinyApp(ui = ui, server = server)
@@ -216,6 +223,8 @@ tags$blockquote("This is a quote")
 
 ### Widgets
 
+#### Slider
+
 ```{r}
 # "slider" is the input id
 sliderInput("slider",
@@ -225,12 +234,16 @@ sliderInput("slider",
             value = 30)
 ```
 
+#### Action Button
+
 ```{r}
 # "action" is the input id
 actionButton("action", label = "Click Me!")
 ```
 
 <br/>
+
+#### Radio Buttons
 
 ```{r}
 # radio is the input id
@@ -239,12 +252,16 @@ radioButtons("radio", label = "Choose One of These",
   selected = 1)
 ```
 
+#### Select Input
+
 ```{r}
 # select is the input
 selectInput("select", label = "Choose One of These",
   choices = list("First" = 1, "Second" = 2, "Third" = 3), 
   selected = 1)
 ```
+
+### shinyThemes
 
 ```{r}
 # Define UI for application that draws a histogram
@@ -275,4 +292,67 @@ ui <- fluidPage(
 shinyApp(ui, server)
 ```
 
+```{r}
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+   
+   shinythemes::shinytheme("superhero"),
+  
+   # Application title
+   titlePanel("Old Faithful Geyser Data"),
+   
+   # Sidebar with a slider input for number of bins 
+   sidebarLayout(
+      sidebarPanel(
+         sliderInput("bins",
+                     "Number of bins:",
+                     min = 1,
+                     max = 50,
+                     value = 30)
+      ),
+      
+      # Show a plot of the generated distribution
+      mainPanel(
+         plotOutput("distPlot")
+      )
+   )
+)
 
+shinyApp(ui, server)
+```
+
+## Server
+
+### Reactivity
+
+4 rules of reactivity (from RStudio):
+
+1. R expressions update themselves, if you ask
+2. Nothing needs to happen instantly
+3. The app must do as little as possible
+4. Think carrier pigeons, not electricity
+
+### renderPlot
+
+- These are reactive functions (e.g. they detect when their dependencies have changes)
+- More about this later
+- renderTable is similar, but outputs a table instead of a plot
+
+Lets check out the server function from our previous example:
+
+```{r}
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+   
+   output$distPlot <- renderPlot({
+      # generate bins based on input$bins from ui.R
+      x    <- faithful[, 2] 
+      bins <- seq(min(x), max(x), length.out = input$bins + 1)
+      
+      # draw the histogram with the specified number of bins
+      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+   })
+}
+
+shinyApp(ui, server)
+```
